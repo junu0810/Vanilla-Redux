@@ -1,37 +1,53 @@
 import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
-import {createStore} from "redux";
+import { createStore } from "redux";
 
-
-const add = document.querySelector(".add");
+const add = document.querySelector(".add")
 const minus = document.querySelector(".minus");
 const number = document.querySelector(".number");
 
-const countModifier = (count = 0, action ) =>{
-  if (action.type === "ADD"){
-    return count++
+number.innerText = 0
+
+const ADD ="ADD"
+const MINUS ="MINUS"
+
+const countModifier = (count = 0, action) => {
+  // if (action.type === "ADD"){
+  //   return count+1
+  // }
+  // else if(action.type === "MINUS"){
+  //   return count-1
+  // } 
+  // else return count
+  switch (action.type) {
+    case (ADD):
+      return count + 1
+    case (MINUS):
+      return count - 1
+    default:
+      return count
   }
-  else if(action.type === "MINUS"){
-    return count--
-  } 
-  else return count
- 
+
 }
+
 
 const countStore = createStore(countModifier)
 
+const onChange = () => {
+  number.innerText = countStore.getState()
+}
+
+countStore.subscribe(onChange)
 
 const handleAdd = () => {
-  console.log('num')
-  countStore.dispatch({type:"ADD"})
+  countStore.dispatch({ type: ADD });
 };
 
 const handleMinus = () => {
-  countStore.dispatch({type:"MINUS"})
+  countStore.dispatch({ type: MINUS });
 };
 
-add.addEventListener("click",()=>handleAdd)
-minus.addEventListener('click',()=>handleMinus)
-
+add.addEventListener("click", handleAdd);
+minus.addEventListener("click", handleMinus);
 
 // const updateText = () => {
 //   number.innerText = count;
