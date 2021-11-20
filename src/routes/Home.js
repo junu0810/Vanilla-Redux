@@ -20,7 +20,7 @@ function Home({ toDos, addToDo }) {
         <input type="text" value={text} onChange={onChange} />
         <button>Add</button>
       </form>
-      <ul>{JSON.stringify(toDos)}</ul>
+      <ul>{toDos.map(toDo => <ToDo {...toDo} key={toDo.id} />)}</ul>
     </>
   );
 }
